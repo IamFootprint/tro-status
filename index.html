@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRO Status</title>
+    <title>System Status — Trading Risk Officer</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -11,68 +11,202 @@
             background: #0a0a0f;
             color: #e2e8f0;
             min-height: 100vh;
+            line-height: 1.6;
         }
-        .container { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; }
-        header { text-align: center; margin-bottom: 2rem; }
-        header h1 { font-size: 1.5rem; font-weight: 600; color: #f8fafc; }
-        header p { color: #94a3b8; margin-top: 0.5rem; font-size: 0.875rem; }
+        .container { max-width: 640px; margin: 0 auto; padding: 3rem 1.25rem; }
+
+        /* Header */
+        header { text-align: center; margin-bottom: 2.5rem; }
+        .logo { height: 48px; margin-bottom: 1rem; border-radius: 8px; }
+        header h1 { font-size: 1.25rem; font-weight: 600; color: #f8fafc; letter-spacing: -0.01em; }
+        header p { color: #94a3b8; margin-top: 0.5rem; font-size: 0.9375rem; }
+        header a { color: #34d399; text-decoration: none; }
+        header a:hover { text-decoration: underline; }
+
+        /* Status banner */
         .status-banner {
-            padding: 1.5rem;
-            border-radius: 0.75rem;
+            padding: 1.75rem 1.5rem;
+            border-radius: 1rem;
             text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.125rem;
-            font-weight: 600;
+            margin-bottom: 1rem;
         }
-        .status-operational { background: #064e3b; color: #6ee7b7; border: 1px solid #065f46; }
-        .status-degraded { background: #713f12; color: #fde68a; border: 1px solid #854d0e; }
-        .status-major { background: #7f1d1d; color: #fca5a5; border: 1px solid #991b1b; }
-        .status-investigating { background: #713f12; color: #fde68a; border: 1px solid #854d0e; }
+        .status-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.625rem;
+        }
+        .status-subtitle {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            opacity: 0.85;
+        }
+        .status-operational {
+            background: linear-gradient(135deg, #064e3b, #052e23);
+            color: #6ee7b7;
+            border: 1px solid #065f46;
+        }
+        .status-degraded {
+            background: linear-gradient(135deg, #713f12, #5c340f);
+            color: #fde68a;
+            border: 1px solid #854d0e;
+        }
+        .status-major {
+            background: linear-gradient(135deg, #7f1d1d, #6b1a1a);
+            color: #fca5a5;
+            border: 1px solid #991b1b;
+        }
+        .status-investigating {
+            background: linear-gradient(135deg, #713f12, #5c340f);
+            color: #fde68a;
+            border: 1px solid #854d0e;
+        }
         .status-dot {
             display: inline-block;
-            width: 10px; height: 10px;
+            width: 12px; height: 12px;
             border-radius: 50%;
-            margin-right: 0.5rem;
-            vertical-align: middle;
         }
-        .dot-green { background: #34d399; }
-        .dot-yellow { background: #fbbf24; }
-        .dot-red { background: #f87171; }
-        h2 { font-size: 1.125rem; color: #f8fafc; margin-bottom: 1rem; }
-        .incident { background: #1e293b; border-radius: 0.5rem; padding: 1rem; margin-bottom: 0.75rem; border-left: 3px solid #475569; }
-        .incident-date { font-size: 0.75rem; color: #64748b; margin-bottom: 0.25rem; }
-        .incident-title { font-weight: 600; color: #e2e8f0; text-transform: capitalize; }
-        .incident-body { font-size: 0.875rem; color: #94a3b8; margin-top: 0.25rem; }
-        .no-incidents { color: #64748b; font-style: italic; }
-        footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #1e293b; }
-        footer a { color: #34d399; text-decoration: none; }
+        .dot-green { background: #34d399; box-shadow: 0 0 8px rgba(52, 211, 153, 0.4); }
+        .dot-yellow { background: #fbbf24; box-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
+        .dot-red { background: #f87171; animation: pulse-red 2s ease-in-out infinite; box-shadow: 0 0 8px rgba(248, 113, 113, 0.4); }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* What this means */
+        .explainer {
+            background: #111827;
+            border: 1px solid #1e293b;
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2.5rem;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        .explainer strong { color: #e2e8f0; }
+
+        /* Services */
+        .services { margin-bottom: 2.5rem; }
+        .services h2 { font-size: 0.8125rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+        .service-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.875rem 1rem;
+            background: #111827;
+            border: 1px solid #1e293b;
+            border-radius: 0.625rem;
+            margin-bottom: 0.5rem;
+        }
+        .service-name { font-size: 0.9375rem; color: #e2e8f0; }
+        .service-status {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+        .service-status .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .service-ok .dot { background: #34d399; }
+        .service-ok { color: #34d399; }
+
+        /* Incidents */
+        .incidents { margin-bottom: 2.5rem; }
+        .incidents h2 { font-size: 0.8125rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+        .incident {
+            background: #111827;
+            border: 1px solid #1e293b;
+            border-radius: 0.625rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .incident-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.375rem; }
+        .incident-title { font-weight: 600; color: #e2e8f0; font-size: 0.9375rem; text-transform: capitalize; }
+        .incident-date { font-size: 0.75rem; color: #475569; }
+        .incident-body { font-size: 0.875rem; color: #94a3b8; }
+        .incident-badge {
+            display: inline-block;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: 0.125rem 0.5rem;
+            border-radius: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .badge-resolved { background: #064e3b; color: #6ee7b7; }
+        .badge-investigating { background: #713f12; color: #fde68a; }
+        .badge-major { background: #7f1d1d; color: #fca5a5; }
+        .no-incidents { color: #475569; font-size: 0.9375rem; padding: 1.5rem; text-align: center; background: #111827; border: 1px solid #1e293b; border-radius: 0.625rem; }
+
+        /* Footer */
+        footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #1e293b; }
+        footer a { color: #34d399; text-decoration: none; font-size: 0.875rem; }
         footer a:hover { text-decoration: underline; }
-        footer p { font-size: 0.75rem; color: #475569; margin-top: 0.5rem; }
+        footer .updated { font-size: 0.75rem; color: #475569; margin-top: 0.75rem; }
+        footer .support { font-size: 0.8125rem; color: #64748b; margin-top: 0.5rem; }
+        footer .support a { color: #94a3b8; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Trading Risk Officer &mdash; System Status</h1>
-            <p>Real-time system status for <a href="https://tradingriskofficer.com" style="color:#34d399;">tradingriskofficer.com</a></p>
+            <h1>Trading Risk Officer</h1>
+            <p>Platform status and availability</p>
         </header>
 
         <!-- STATUS_BANNER -->
         <div class="status-banner status-operational">
-            <span class="status-dot dot-green"></span>
-            All Systems Operational
+            <div class="status-title">
+                <span class="status-dot dot-green"></span>
+                All Systems Operational
+            </div>
+            <div class="status-subtitle">Everything is running smoothly. No issues detected.</div>
         </div>
         <!-- /STATUS_BANNER -->
 
-        <h2>Recent Incidents</h2>
+        <div class="explainer">
+            <strong>What does this page show?</strong> This page shows whether the Trading Risk Officer platform is working normally. If there's ever a problem, we'll post updates here so you always know what's happening.
+        </div>
 
-        <!-- INCIDENTS -->
-        <p class="no-incidents">No recent incidents.</p>
-        <!-- /INCIDENTS -->
+        <div class="services">
+            <h2>Services</h2>
+            <div class="service-row">
+                <span class="service-name">Dashboard &amp; App</span>
+                <span class="service-status service-ok"><span class="dot"></span> Operational</span>
+            </div>
+            <div class="service-row">
+                <span class="service-name">Trade Import</span>
+                <span class="service-status service-ok"><span class="dot"></span> Operational</span>
+            </div>
+            <div class="service-row">
+                <span class="service-name">Risk Evaluations</span>
+                <span class="service-status service-ok"><span class="dot"></span> Operational</span>
+            </div>
+            <div class="service-row">
+                <span class="service-name">Reports &amp; Analytics</span>
+                <span class="service-status service-ok"><span class="dot"></span> Operational</span>
+            </div>
+            <div class="service-row">
+                <span class="service-name">Account &amp; Billing</span>
+                <span class="service-status service-ok"><span class="dot"></span> Operational</span>
+            </div>
+        </div>
+
+        <div class="incidents">
+            <h2>Recent Updates</h2>
+
+            <!-- INCIDENTS -->
+            <div class="no-incidents">No recent issues. Everything has been running smoothly.</div>
+            <!-- /INCIDENTS -->
+        </div>
 
         <footer>
-            <a href="https://tradingriskofficer.com">&larr; Back to TRO</a>
-            <p>Last updated: <!-- LAST_UPDATED -->--<!-- /LAST_UPDATED --></p>
+            <a href="https://tradingriskofficer.com">&larr; Back to Trading Risk Officer</a>
+            <p class="support">Questions? Contact us at <a href="mailto:support@tradingriskofficer.com">support@tradingriskofficer.com</a></p>
+            <p class="updated">Last updated: <!-- LAST_UPDATED -->--<!-- /LAST_UPDATED --></p>
         </footer>
     </div>
 </body>
